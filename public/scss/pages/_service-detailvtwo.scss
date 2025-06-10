@@ -1,0 +1,191 @@
+/** ====== Service Detail-2 V2 components ====== **/
+.wr-fixsidebar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 405px;
+    background-color: #fff;
+    z-index: 12;
+    height: 100%;
+    transform: translateX(100%);
+    overflow-y: auto;
+    @extend %transition;
+    @extend %border;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    z-index: 99 !important;
+    -webkit-box-shadow: 0px 0 20px 10px rgb(0 0 0 / 10%);
+    box-shadow: 0px 0 20px 10px rgb(0 0 0 / 10%);
+    &::-webkit-scrollbar {display: none;}
+    .wr-messageuser{
+        height: auto;
+    }
+    .wr-sidebarform{
+        .form-group-wrap{
+            width: 100%;
+        }
+    }
+    .wr-uploadarea{width: 100%;}
+    .wr-uploadbar{
+        flex-wrap: wrap;
+        align-items:inherit;
+        flex-direction: column;
+    }
+    .wr-packages__plan{
+        text-align: left;
+        padding: 0 0 20px;
+    }
+    .wr-tasktotalbudget .close{
+        top: 0;
+        left: 0;
+        position:relative;
+    }
+}
+.wr-faq{
+    padding-top: 20px;
+    &__content{
+        background: $lightest;
+        border-radius: $radiusvthree;
+        & + .wr-faq__content{margin-top: 20px;}
+        .wr-sectiontitle{
+            padding: 0 20px 20px;
+            p{
+                margin: 0 !important;
+                padding:0;
+                & + p{
+                    margin-top: 26px;
+                }
+            }
+        }
+        .wr-select{
+            align-items: flex-start;
+        }
+    }
+    &__title{  
+        padding: 20px;
+        cursor: pointer;
+        &[aria-expanded="true"]{
+            h6{
+                &:before{content: '\e9a3';}
+            }
+        }
+        h6{
+            padding-right: 30px;
+            margin: 0;
+            font-size: 18px;
+            line-height: 26px;
+            letter-spacing: 0.5px;
+            color: $heading-font-color;
+            &:before{
+                font-size: 24px;
+                right: 0;
+                content: "\e9c0";
+                color: $heading-font-color;
+            }
+        }
+    }
+}
+.wr-filderbtns{
+    @extend %flex;
+    align-items: center;
+    margin: -10px;
+    a{margin: 10px;}
+}
+.wr-clearfilter{
+    color: #999;
+    font: 600 15px $heading-font-family;
+    line-height: 20px;
+    @extend %transition;
+    &:focus,
+    &:hover{
+        color: #353648;
+    }
+}
+.wr-categoriesfilter{
+    @extend %flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li{
+        width: 100%;
+        list-style-type: none;
+        & + li{margin-top: 14px;}
+        label{
+            &::after{
+                left: 1px;
+            }
+        }
+    }
+    .wr-checkbox{
+        label{
+            font-size: rem(15);
+            line-height: em(24,15);
+            color: $heading-font-color;
+        }
+        & input[type=checkbox]{
+            &:checked{
+                & + label:before{
+                    color: transparent;
+                }
+            }
+            & + label{
+                &:after{
+                    top: 2px;
+                }
+            }
+        }
+    }
+    & + .wr-readmorebtn{margin-top: 10px;}
+}
+.wr-searchresult-section .wr-sidebarcontent .wr-filterselect{display: block;}
+.wr-sidebarbox{
+    .wr-filterselect{width: 100%;}
+}
+.wr-rangevalue{
+    .form-control{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        + .form-control{
+            border-left: 0;
+        }
+    }
+}
+.noUi-target{
+    background: $lightest;
+    border: 0;
+    border-radius: 1.5px;
+    height: 3px;
+    margin-top: 20px;
+}
+.noUi-horizontal .noUi-handle{
+    top: 0px;
+    width: 20px;
+    height: 20px;
+}
+.noUi-handle{
+    top: 1px;
+    outline: none;
+    border-radius: 50%;
+    background: #63d594;
+    border: 2px solid #fff;
+    transform: translateY(-50%);
+    -webkit-box-shadow: 0 0 15px 0 rgb(0 0 0 / 30%);
+    box-shadow: 0 0 15px 0 rgb(0 0 0 / 30%);
+}
+.noUi-connect{background: #63d594;}
+.noUi-handle:after,
+.noUi-handle:before{content: none;}
+.wr-distanceholder{
+    -webkit-box-shadow: 0 6px 20px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 6px 20px 0 rgb(0 0 0 / 10%);
+    .wr-distance{box-shadow: none;}
+    .wr-btnholder .wr-btn {
+        height: 36px;
+        min-width: 60px;
+        font-size: 14px;
+    }
+}
+.gy-4 > div.col-lg-12 > .wr-serviesbann{
+    margin-bottom: -4px;
+}

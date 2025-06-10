@@ -1,0 +1,76 @@
+/** ====== How it Works components ====== **/
+.wr-howitwork{
+  > .row{
+    align-items: center;
+    
+    &:nth-child(even){flex-direction: row-reverse;}
+  }
+  .wr-main-title-holder{padding: 0;}
+}
+.wr-howitwork-section{
+  .wr-main-section{
+    padding: 0;
+  }
+}
+.wr-reverse-direction{
+  > .row{
+    flex-direction: row-reverse;
+  }
+}
+  .wr-howitwork{
+    .wr-maintitle{
+      max-width: 455px;
+    }
+  }
+  .wr-startedtoday-section{
+    background-color: $dark;
+    .wr-main-title-holder{padding-bottom: 0;}
+    .wr-maintitle h5,
+    .wr-main-description p{color: $clr-white;}
+    .wr-maintitle h2{color: $theme-color;}
+  }
+  .wr-mainlink{
+    padding-top: 20px;
+    a{
+      display: inline-flex;
+      align-items: center;
+      color: $anchor-color;
+      span{
+        display: inline-block;
+        margin:  0 10px 0 0 ;
+      }
+    } 
+  }
+  .wr-starrate{
+    padding: 22.5px 25px;
+    box-shadow: $drop_shadows_medium;
+    background: $clr-white;
+    max-width: 270px;
+    border-radius: 60px;
+    margin-top: 20px;
+    @extend %flex;
+    align-items:center ;
+    flex-wrap: nowrap;
+    position: relative;
+    span{
+      font-size: 24px;
+      color: $theme-color;
+      vertical-align: top;
+      margin:  0 8px 0 0;
+      display: inline-block;
+    }
+    img{
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+  .wr-howitworks-v3 .wr-main-title-holder{
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .wr-reverse-direction{
+    .row{
+      flex-direction: row-reverse;
+    }
+  }

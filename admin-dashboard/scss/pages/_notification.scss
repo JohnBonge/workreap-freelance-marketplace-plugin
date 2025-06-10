@@ -1,0 +1,35 @@
+.wr-notiwrapper{
+  .wr-dbholder{
+    li {
+      @extend %flex;
+      padding: 15px 29px;
+      align-items: center;
+      list-style-type: none;
+      justify-content: space-between;
+      + li{
+        border-top: 1px solid #eee;
+      }
+    }
+  }
+}
+.wr-dbholder__list{
+  strong,
+  span,
+  a {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: $heading-font-family;
+  }
+  strong{
+    color: #353648;
+  }
+  em{color: #999999;}
+  a{color:#55acee;}
+}
+.wr-notidate{
+    font: 400 rem(13)/em(20,13) $heading-font-family;
+    color: #999999;
+}
+.wr-notiwrapper{
+    .wr-tabfilteritem{border-radius: 0 0 4px 4px;}
+}

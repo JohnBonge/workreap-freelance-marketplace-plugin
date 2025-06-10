@@ -1,0 +1,64 @@
+.wr-socialmedia{
+    @extend %flex;
+    font-size: 13px;
+    justify-content: center;
+    li{
+        &:nth-last-child(n+2){margin-right: 10px;} 
+    }
+    a{
+        display: inline-block;
+        @extend %transition;
+    }
+}
+.wr-facebook > i,
+.wr-facebook > a {color: #3b5999}
+.wr-facebook-messenger > a,
+.wr-facebook-messenger > i {color: #0084ff}
+.wr-twitter> a,
+.wr-twitter > i {color: #55acee}
+.wr-linkedin> a,
+.wr-linkedin > i {color: #0077b5}
+.wr-skype> a,
+.wr-skype > i {color: #00aff0}
+.wr-dropbox> a,
+.wr-dropbox > i {color: #007ee5}
+.wr-vimeo> a,
+.wr-vimeo > i {color: #1ab7ea}
+.wr-tumblr > i,
+.wr-tumblr> a, {color: #34465d}
+.wr-yahoo> a,
+.wr-yahoo >i {color: #410093}
+.wr-googleplus> a,
+.wr-googleplus > i,
+.wr-google> a,
+.wr-google > i{color: #dd4b39}
+.wr-pinterestp> a,
+.wr-pinterestp > i {color: #bd081c}
+.wr-youtube> a,
+.wr-youtube > i {color: #cd201f}
+.wr-stumbleupon> a,
+.wr-stumbleupon > i {color: #eb4924}
+.wr-reddit> a,
+.wr-reddit > i {color: #ff5700}
+.wr-quora> a,
+.wr-quora > i {color: #b92b27}
+.wr-yelp> a,
+.wr-yelp > i {color: #af0606}
+.wr-soundcloud> a,
+.wr-soundcloud > i {color: #f30}
+.wr-whatsapp> a,
+.wr-whatsapp > i {color: #25d366}
+.wr-wechat> a,
+.wr-wechat > i {color: #09b83e}
+.wr-instagram> a,
+.wr-instagram > i {color: #e4405f}
+.wr-dribbble> a,
+.wr-dribbble > i {color: #ea4c89}
+.wr-flickr> a,
+.wr-flickr > i {color: #ff0084}
+.wr-rss> a,
+.wr-rss > i {color: #f60}
+.wr-behance> a,
+.wr-behance > i {color: #131418}
+.wr-foursquare> a,
+.wr-foursquare > i {color: #f94877}

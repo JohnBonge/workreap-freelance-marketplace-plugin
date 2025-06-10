@@ -1,0 +1,118 @@
+/** ====== Social icon ====== **/
+.wr-socialmedia{
+    @extend %flex;
+    font-size: 13px;
+    justify-content: center;
+    li{
+        &:nth-last-child(n+2){margin-right: 10px;} 
+    }
+    a{
+        display: inline-block;
+        @extend %transition;
+    }
+}
+.wr-facebook > i,
+.wr-facebook > a {color: #3b5999 !important}
+.wr-facebook-messenger > a,
+.wr-facebook-messenger > i {color: #0084ff !important}
+.wr-twitter> a,
+.wr-twitter > i {color: #55acee !important}
+.wr-linkedin> a,
+.wr-linkedin > i {color: #0077b5 !important}
+.wr-skype> a,
+.wr-skype > i {color: #00aff0 !important}
+.wr-dropbox> a,
+.wr-dropbox > i {color: #007ee5 !important}
+.wr-vimeo> a,
+.wr-vimeo > i {color: #1ab7ea !important}
+.wr-tumblr > i,
+.wr-tumblr> a {color: #34465d !important}
+.wr-yahoo> a,
+.wr-yahoo >i {color: #410093 !important}
+.wr-googleplus> a,
+.wr-googleplus > i,
+.wr-google> a,
+.wr-google > i{color: #dd4b39 !important}
+.wr-pinterestp> a,
+.wr-pinterestp > i {color: #bd081c !important}
+.wr-youtube> a,
+.wr-youtube > i {color: #cd201f !important}
+.wr-stumbleupon> a,
+.wr-stumbleupon > i {color: #eb4924 !important}
+.wr-reddit> a,
+.wr-reddit > i {color: #ff5700 !important}
+.wr-quora> a,
+.wr-quora > i {color: #b92b27 !important}
+.wr-yelp> a,
+.wr-yelp > i {color: #af0606 !important}
+.wr-soundcloud> a,
+.wr-soundcloud > i {color: #f30 !important}
+.wr-whatsapp> a,
+.wr-whatsapp > i {color: #25d366 !important}
+.wr-wechat> a,
+.wr-wechat > i {color: #09b83e !important}
+.wr-instagram> a,
+.wr-instagram > i {color: #e4405f !important}
+.wr-dribbble> a,
+.wr-dribbble > i {color: #ea4c89 !important}
+.wr-flickr> a,
+.wr-flickr > i {color: #ff0084 !important}
+.wr-rss> a,
+.wr-rss > i {color: #f60 !important}
+.wr-behance> a,
+.wr-behance > i {color: #131418 !important}
+.wr-foursquare> a,
+.wr-foursquare > i {color: #f94877 !important}
+
+.wr-facebook-hover > i:hover,
+.wr-facebook-hover > a:hover {color: #3b5999}
+.wr-facebook-messenger-hover > a:hover,
+.wr-facebook-messenger-hover > i:hover {color: #0084ff}
+.wr-twitter-hover > a:hover,
+.wr-twitter-hover > i:hover {color: #55acee}
+.wr-linkedin-hover > a:hover,
+.wr-linkedin-hover > i:hover {color: #0077b5}
+.wr-skype-hover > a:hover,
+.wr-skype-hover > i:hover {color: #00aff0}
+.wr-dropbox-hover > a:hover,
+.wr-dropbox-hover > i:hover {color: #007ee5}
+.wr-vimeo-hover > a:hover,
+.wr-vimeo-hover > i:hover {color: #1ab7ea}
+.wr-tumblr-hover > i:hover,
+.wr-tumblr-hover > a:hover {color: #34465d}
+.wr-yahoo-hover > a:hover,
+.wr-yahoo-hover > i:hover {color: #410093}
+.wr-googleplus-hover > a:hover,
+.wr-googleplus-hover > i:hover,
+.wr-google-hover > a:hover,
+.wr-google-hover > i:hover{color: #dd4b39}
+.wr-pinterestp-hover > a:hover,
+.wr-pinterestp-hover > i:hover {color: #bd081c}
+.wr-youtube-hover > a:hover,
+.wr-youtube-hover > i:hover {color: #cd201f}
+.wr-stumbleupon-hover > a:hover,
+.wr-stumbleupon-hover > i:hover {color: #eb4924}
+.wr-reddit-hover > a:hover,
+.wr-reddit-hover > i:hover {color: #ff5700}
+.wr-quora-hover > a:hover,
+.wr-quora-hover > i:hover {color: #b92b27}
+.wr-yelp-hover > a:hover,
+.wr-yelp-hover > i:hover {color: #af0606}
+.wr-soundcloud-hover > a:hover,
+.wr-soundcloud-hover > i:hover {color: #f30}
+.wr-whatsapp-hover > a:hover,
+.wr-whatsapp-hover > i:hover {color: #25d366}
+.wr-wechat-hover > a:hover,
+.wr-wechat-hover > i:hover {color: #09b83e}
+.wr-instagram-hover > a:hover,
+.wr-instagram-hover > i:hover {color: #e4405f}
+.wr-dribbble-hover > a:hover,
+.wr-dribbble-hover > i:hover {color: #ea4c89}
+.wr-flickr-hover > a:hover,
+.wr-flickr-hover > i:hover {color: #ff0084}
+.wr-rss-hover > a:hover,
+.wr-rss-hover > i:hover {color: #f60}
+.wr-behance-hover > a:hover,
+.wr-behance-hover > i:hover {color: #131418}
+.wr-foursquare-hover > a:hover,
+.wr-foursquare-hover > i:hover {color: #f94877}

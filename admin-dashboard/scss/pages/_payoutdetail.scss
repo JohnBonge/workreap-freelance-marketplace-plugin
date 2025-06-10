@@ -1,0 +1,148 @@
+.bordr-blue {
+    border-color: #55acee !important;
+}
+
+.wr-printshaer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 0 30px;
+
+    a{
+        & + a{
+            margin: 0 0 0 10px;
+        }
+    }
+    .wr-btn {
+        i{font-size: 18px;}
+        & + .wr-btn{
+            min-width: 140px;
+        }
+    }
+}
+.btn-sm{
+    min-width: 44px;
+    line-height: 44px;
+    background: #00cc8d;
+    color: #fff;
+    padding: 0 10px;
+}
+.wr-shareinvoice{
+    color: $text-light;
+    font: 400 rem(14)/em(18,14) $heading-font-family;
+    margin: 0 20px 0 0;
+    display: inline-block;
+    i{
+        display: inline-block;
+        margin: 0 10px 0 0;
+        font-size: rem(18px);
+    }
+}
+.wr-payouthistory{
+    background: #fff;
+    padding: 30px;
+    border-radius: $radius;
+    @extend %themeboxshadowvtwo;
+    .wr-table{
+        > thead > tr > th{
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+        > tbody > tr td{
+            padding-top: 6.5px;
+            padding-bottom: 6.5px;
+        }
+    }
+    .wr-bordertags{display: flex;}
+    .wr-checkbox label{padding: 0 0 0 10px;}
+    .wr-checkbox label:before,
+    .wr-radio label:before{
+        display: none;
+        
+    }
+    .wr-checkbox input[type=checkbox] + label:after{display: none}
+}
+.wr-payoutlogo{
+   @extend %flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    strong{
+        max-width: 156px;
+        a{display: block;}
+    }
+}
+.wr-payouttitle{
+    h5{
+        font: 700 rem(20)/em(28,20) $heading-font-family;
+        margin: 0;
+    }
+}
+.wr-fromreceiver{
+    span{
+        line-height: em(17,14);
+        display: block;
+        font-family: $heading-font-family;
+    }
+    h5{
+        margin: 0;
+        line-height: em(19,13);
+    }
+}
+.wr-pdfdownload{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: auto;
+    margin-left: 25px;
+    a{
+        color:$body-font-color;
+        display: block;
+        font-size: rem(13);
+        i{
+            font-size: 16px;
+            color: #ff7062;
+            display: inline-block;
+            margin:  0 3px 0 0;
+        }
+    }   
+}
+.wr-displistform{
+    .wr-profileform__content{
+        padding: 5px;
+        .wr-combine-group{
+            max-width: 350px;
+            .wr-calendar{
+                .form-control{
+                    height: 44px;
+                }
+            }
+        }
+    }
+    .wr-downloadbtn{
+        padding: 5px;
+        a{
+            border-radius: 10px;
+        }
+    }
+}
+
+.wr-payout-sort{
+    @extend %flex;
+    align-items:center;
+}
+.wr-calendar-wrap{
+    @extend %flex;
+    align-items:center;
+    .wr-calendar{
+        width: 50%;
+    }   
+}
+.wr-payout-sort{
+    .wr-displistform{
+        .wr-downloadbtn{
+            a{min-width: 140px;line-height: 48px;height: auto;}
+        }
+    }
+}
+.wr-bordertags + .wr-dispueitems{margin-left: 10px;}

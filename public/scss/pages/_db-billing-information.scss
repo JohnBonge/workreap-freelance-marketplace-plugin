@@ -1,0 +1,23 @@
+/** ====== Billing Information components ====== **/
+.wr-billinginfo{
+    fieldset{
+        padding: 30px;
+    }
+    .wr-additonoltitle{
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+    }
+    .form-group-half,
+    .form-group{
+        margin-bottom: 0;
+    }
+    .wr-billinginfobtn{
+        margin-bottom: 0;
+        padding-top: 6px;
+        justify-content: flex-end;
+    }
+}
+.wr-profileform__detail.wr-billinginfo{
+    margin: -10px;
+}

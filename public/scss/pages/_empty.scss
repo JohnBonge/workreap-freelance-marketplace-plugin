@@ -1,0 +1,34 @@
+/** ====== Empty components ====== **/
+.wr-submitreview{
+    display: flex;
+    padding: 120px 30px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: $radiusvthree;
+    background-color: $clr-white;
+    h4{
+        font-size: rem(18);
+        line-height: em(28,18);
+        width: 100%;
+        font-weight: 500;
+        margin: 0 auto;
+        max-width: 350px;
+        text-align: center;
+    }
+    figure{
+        margin: 0 0 40px;
+        img{
+            width: 100%;
+            max-width: 150px;
+        }
+    }
+    .wr-description{
+        width: 61%;
+        text-align: center;
+        p{
+            font-size: rem(16);
+            margin: 0 0 23px;
+        }
+    }   
+}

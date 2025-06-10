@@ -1,0 +1,201 @@
+/** ====== Contact-Us components ====== **/
+.wr-slider-section{
+    padding: 80px 0;
+    background-color: $lightest;
+    border-radius: $radiusvthree;
+}
+.wr-faq-holder{
+    margin:0;
+}
+.wr-faq-category{
+    @extend %flex;
+    overflow: hidden;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    justify-content: center;
+    border-radius: $radiusvthree;
+    background-color: $clr-white;
+    figure{
+        margin-bottom: 0;
+        img{
+           margin: 0 auto;
+       }
+    }
+    &:after{
+        content: '';
+        position: absolute;
+        width: 0;
+        @extend %transitiontwo;
+        height: 3px;
+        left: 0;
+        bottom: 0;
+        background-color: $theme-color;
+    }
+    &:hover,
+    &-active{
+        &::after{
+            width: 100%;
+        }
+    }
+}
+.wr-faq_desp{
+    margin-top: 20px;
+    h5{
+        margin-bottom: 0;
+    }
+    span{
+        @extend %p15;
+        color:$text-gray;
+    }
+}
+.wr-faqsslider {
+    margin-top: 20px;
+    .splide__pagination{bottom: 0;}
+    filter: drop-shadow(0px 5px 6px rgba(0, 0, 0, 0.04)) drop-shadow(0px 3px 16px rgba(0, 0, 0, 0.04));
+    .splide__arrows {
+        .splide__arrow--prev {
+            left: -35px;
+            &:before{
+                font-size: 30px;
+            }
+        }
+        .splide__arrow--next {
+            right: -35px;
+            &:before{
+                font-size: 30px;
+            }
+        }
+    }
+}
+.wr-faq-search{
+    padding: 60px 0;
+    & > .wr-maintitle{
+        margin: 0 auto;
+        max-width: 856px;
+        h5{
+            @extend %h4;
+            font-weight: 600;
+        }
+        p{margin: 20px 0 0;}
+    }
+    .wr-inputappend > i{
+        color:$text-light;
+    }
+}
+.wr-faq-section{
+    &.wr-main-section{
+        padding-top:80px;
+        padding-bottom: 30px;
+        background-color: $clr-white;
+    }
+}
+.wr-blue-clr{
+    color: $theme-color;
+}
+.wr-faq_input{
+    .wr-inputappend{
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 856px;
+        overflow: hidden;
+        .form-control{
+            border: 0;
+            box-shadow:none;
+        }
+    }
+    .wr-placeholderholder{
+        width: auto;
+        flex: auto;
+    }
+}
+.wr-acoridan_title{
+    h3{
+        font-weight: 500;
+        margin-bottom: 0;
+        padding-bottom: 20px;
+    }
+}
+.wr-accordion{
+    padding-left: 0;
+    margin: 0;
+    li{
+        list-style-type: none;
+        cursor: pointer;
+        margin-bottom: 20px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    &_title{
+        padding:20px;
+        @extend %flex;
+        position:relative;
+        align-items: center;
+        background-color: $lightest;
+        border-radius: $radiusvthree;
+        &[aria-expanded="true"]{
+            border-radius: $radiusvthree $radiusvthree 0 0;
+            &:after{
+                content: "\e9a3";
+            }
+        }
+        &:after{
+            right: 20px;
+            color: $heading-font-color;
+            content: "\e9c0";
+            position:absolute;
+            font-size: rem(24);
+            @extend %transition;
+            align-self:flex-start;
+            line-height: em(26,24);
+            font-family: 'workreap-icons' !important;
+        }
+        h5{
+            margin-bottom: 0;
+            padding-right: 30px;
+        }
+    }
+    &_info{
+        cursor: default;
+        padding: 0 20px 20px;
+        background-color: $lightest;
+        border-radius: 0 0 $radiusvthree $radiusvthree;
+        p{
+            margin: 0;
+            ~ p{padding-top: 26px;}
+        }
+    }
+}
+.wr-question-section{
+    gap: 20px;
+    @extend %flex;
+    margin-top: 0;
+    padding: 40px;
+    margin-bottom: 80px;
+    align-items: center;
+    background-color: #0A1833;
+    border-radius: $radiusvthree;
+    justify-content: space-between;
+    .wr-btn-solid-lg{
+        font-size: 15px;
+    }
+}
+.wr-faq-search_title{
+    h5{
+        color: $clr-white;
+        margin: 0;
+    }
+    h2{
+        margin: 5px 0 0;
+        color: $theme-color;
+    }
+}
+.wr-question_desc{
+    padding-top: 20px;
+    max-width: 592px;
+    p{
+        color: $clr-white;
+        margin-bottom: 0;
+    }
+}

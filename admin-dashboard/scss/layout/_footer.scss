@@ -1,0 +1,18 @@
+.wr-footer-wrap{
+    @extend %border-top;
+    padding: 10px 0;
+    margin-top: auto;
+    margin: -51px 0 0;
+}
+.wr-copyright{
+    text-align: center;
+    p{
+    	margin: 0;
+    	line-height: em(30,14);
+    }
+}
+.page-template-admin-dashboard{
+    .wr-mainfooter{
+        border-top:0;
+    }
+}

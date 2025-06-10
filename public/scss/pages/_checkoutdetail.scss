@@ -1,0 +1,484 @@
+/** ====== Checkout Detail components ====== **/
+.wr-additionalservices{
+    @extend %flex;
+    padding-left: 0;
+    padding-top: 10px;
+    margin: -12px 0;
+    li{
+        width: 100%; 
+        padding: 20px 30px;
+        list-style: none;
+    }
+    &__content{
+        position: relative;
+        padding-left: 0;
+        @extend %flex;
+        align-items: center;
+        justify-content: space-between;
+        p{
+            margin: 0;
+            @extend %p15;
+        }
+        &::before{
+            position: absolute;
+            top: 10px;
+            left: 0;
+            content: "";
+            width: 4px;
+            height: 4px;
+            display: none;
+            background: $dark;
+            border-radius: 50%;
+        }
+    }
+}
+.wr-servicedetail{
+    background-color: $clr-white;
+    border-radius: $radiusvthree;
+    & > .wr-box{
+        border: 0;
+    }
+}
+.wr-main-section{
+    aside{
+        border-radius: $radiusvthree;
+        .wr-orderdetailswrap{
+            border-radius: $radiusvthree;
+            .wr-pakagedetail{
+                padding: 20px;
+            }
+            .wr-walletsystem{
+                padding: 20px;
+            }
+        }
+    }
+}
+.wr-orderdetailswrap{
+    box-shadow: $drop_shadows_lightest;
+    .wr-asideholder{
+        border-radius: $radiusvthree $radiusvthree 0 0;
+        & + .wr-asideholder{
+            border-radius: 0;
+        }
+        .wr-asideboxsm{
+            border-radius: $radiusvthree $radiusvthree 0 0;
+        }
+    }
+}
+.wr-profile-steps{
+    & + .wr-servicedetail{border-top: 0;}
+}
+.wr-checkoutinfo{
+    padding: 30px;
+    @extend %flex;
+    align-items: center;
+    border-bottom: 1px solid $lightest_2;
+    figure{
+        max-width: 150px;
+        margin: 0 20px 0 0;
+        border-radius: $radiusvthree;
+        img{
+            width: 100%;
+            border-radius: $radiusvthree;
+        }
+    }
+}
+.wr-checkoutdetail{
+    h6{
+        a{color: $anchor-color;}
+        margin: 0;
+    }
+    h5{
+        margin: 0 0 6px;
+      
+    }
+}
+.wr-featuedbox{
+    padding: 40px 30px;
+    h4{
+        margin:  0 0 20px;
+    }
+}
+.wr-mainlistvtwo{
+    @extend %flex;
+    flex-wrap: wrap;
+    margin: 20px 0 0;
+    & li {
+        width: 50%;
+        @extend %flex;
+        align-items: center;
+        overflow: hidden;
+        span{
+            padding-right: 3px;
+        }
+        em{
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 10px;
+        }
+        & + li {
+            margin: 0;
+        }
+    }
+    & li:nth-child(n+3){
+        margin: 20px 0 0;
+    }
+}
+.wr-servicedetail{
+    .wr-checkoutinfo{
+        & ~ .wr-box {
+            border-left: 0;
+            border-right: 0;
+            margin: 0;
+            border-top: 0;
+        }
+    }
+    .wr-box{
+        & ~ .wr-box{border-top: 1px solid #eee;}
+        &:last-child{
+            border-bottom: 0;
+            border-radius: 0 0 $radiusvthree $radiusvthree;
+        }
+    }
+}
+.wr-boxtittle{
+    @extend %flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 10px;
+    
+    .wr-inputiconbtn{
+        max-width: 306px;
+    }
+    h4{
+        margin: 0;
+    }
+}
+.wr-additionalservicesvtwo{
+    overflow: hidden;
+    position: relative;
+    padding:0;
+    margin: 0;
+    .wr-additionalservices__content{
+        width: 100%;
+        &::before{
+            display: none;
+        }
+    }
+    .wr-form-checkbox{
+        overflow: hidden;
+        .wr-additionolinfo{
+            border: 0;
+            padding: 0;
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            background: transparent;
+            margin:  0 10px 0 10px;
+            p{
+                margin-bottom: 0;
+            }
+        }
+        .form-check-input{
+            flex: none;
+            margin-top: 3px;
+            align-self: start;
+        }
+    }
+    & li{
+        padding: 20px;
+        &:nth-child(odd){
+            border-radius: 0;
+            background: transparent;
+        }
+        &:first-child{border-radius: $radiusvthree $radiusvthree 0 0;}
+        &:last-child{border-radius: 0 0 $radiusvthree $radiusvthree;}
+        &:not(:last-child){box-shadow: inset 0px -1px 0px $lightest_2;}
+        .wr-addcartinfoprice{
+            @extend %transition;
+          }
+    }
+    .active{
+      background-color: $lightest !important;
+      .wr-form-checkbox{
+          .wr-addcartinfoprice{
+            right: 20px;
+            .wr-multiplyinfo{
+                visibility: visible;
+            }
+          }
+      }
+      
+    }
+}
+.wr-vlaue-btn{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $lightest_2;
+    text-align: center;
+    height: 38px;
+    width: auto;
+    background: $clr-white;
+    padding: 10px 16px;
+    width: 137px;
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {display: none}
+    .wr-input-number {
+            width: auto;
+            text-align: center;
+            border: none;
+            margin: 0px;
+            background: $clr-white;
+            font: 600 0.875rem $heading-font-family;
+            min-width: 20px;
+            height: 24px;
+            padding: 0 8px 0 0;
+            &:focus{
+                border: 0;
+                outline: 0;
+                box-shadow: none;
+            }
+    }
+    a{
+        color:$text-light;
+        display: inline-block;
+        line-height: 12px;
+        i{
+            display: inline-block
+        }
+    }
+    span{
+        @extend %label_title;
+        display: inline-block;
+        color:$text-light;
+        margin: 0 0 0 15px;
+        
+    }
+}
+.wr-multiplyinfo{
+    @extend %flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    visibility: hidden;
+    @extend %transition;
+    > span{
+        display: inline-block;
+        margin: 0 14px;
+    }
+}
+.wr-addcartinfoprice{
+    @extend %flex;
+    align-items: center;
+    justify-content: flex-end;
+    h6{
+        margin: 0;
+        font-weight: 500;
+    }
+}
+.wr-asideboxsm{
+    padding: 20px;
+    background-color: $clr-white;
+    h5{
+        margin: 0;
+    }
+}
+.wr-pakageinfo{
+    h4{
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+    h6{
+        margin: 0;
+    }
+}
+.wr-pakagedetail{
+    display: flex;
+    padding: 20px 30px;
+    background: $lightest;
+    position: relative;
+    &::after{
+        @extend %transition;
+        content: "\e930";
+        position: absolute;
+        top: 32px;
+        right: 25px;
+        font-family: "workreap-icons";
+        font-size: 20px;
+        display: inline-block;
+        color:$text-light;
+    }
+    figure{
+        flex:none;
+        margin:  0 20px 0 0;
+        img{
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+    }
+}
+.wr-pakagedetail.collapsed {
+    &::after{
+       transform: rotate(90deg);
+    }
+}
+.wr-collapsepanel{
+    background: $clr-white;
+}
+.wr-pakagelist{
+    margin: 0;
+    padding: 10px;
+}
+.wr-pakagelist-item,
+.wr-pakagelist-item{
+    list-style: none;
+    @extend %transition;
+    &:hover{
+        a{background: $lightest;}
+    }
+    &.active{
+        a{
+            background: $lightest;
+            em{
+                i{display: inline-block}
+            }
+        }
+    }
+    a{
+        @extend %h6;
+        color: $heading-font-color;
+        display: flex;
+        padding: 14px 20px;
+        align-items: center;
+        @extend %transition;
+        border-radius: $radiusvthree;
+        &:hover{
+            color: $heading-font-color;
+        }
+        img{
+            flex: none;
+            height: 30px;
+            max-width: 30px;
+            margin-right: 10px;
+        }
+        em{
+            margin-left: auto;
+            color:$text-light;
+            font-style: normal;
+            i{
+                display: none;
+                font-size: 16px;
+                color: $bright-green;
+                padding-left: 10px;
+            }
+        }
+    }
+} 
+.wr-featuredlisted{
+    padding: 0;
+    margin: 15px 0 0;
+    li{
+        @extend %p15;
+        list-style: none;
+        span{
+            @extend %p15;
+            display: inline-block;
+            float: right;
+        }
+        & + li {
+            margin: 10px 0 0;
+        }
+    }
+}
+.wr-asideboxv2{
+    ~ .wr-featuredlisted {
+        border-top: 1px solid  $lightest_2;
+        padding: 20px;
+        margin: 0;
+    }
+}
+.wr-walletsystem{
+    padding: 30px;
+    background-color: $primary_color_02_base_40_light;
+    .wr-additionolinfo{
+        border: 0;
+        padding: 0;
+        display: block;
+        cursor: pointer;
+        max-width: 220px;
+        margin: 0 0 0 10px;
+        background-color: transparent;
+    }
+    .wr-form-checkbox{
+        align-items: flex-start;
+        .form-check-input{
+            margin-top: 3px;
+        }
+    }
+    .wr-additionalservices__content {
+        @extend %flex;
+        justify-content: space-between;
+        width: 100%;
+        .wr-additionalservices-title{
+            max-width: 200px;
+            p{
+                color: $heading-font-color;
+            }
+        }
+        
+        &::before{
+            display: none;
+        }
+    }
+}
+.wr-walletamount{
+    flex: none;
+    align-self: center;
+    margin-left: auto;
+    span{
+        @extend %p15;
+        color: $heading-font-color;
+    }
+}
+.wr-btnwallet{
+    a{
+        width: 100%;
+        border-radius: 0 0 $radiusvthree $radiusvthree;
+        i{
+            padding: 0 10px 0 0;
+        }
+    }
+}
+.wr-btnsfund{
+    width: 100%;
+    background-color: $primary_color_02_base_20_dark !important;
+    height: 40px;
+}
+.wr-btnwalletfund{
+    margin: 20px 0 0 ;
+}
+.wr-additionolinfo{
+   > span{
+        display: block;
+        @extend %h6;
+        color: $heading-font-color;
+        padding-left: 0 !important;
+    }
+    > em{
+        display: block;
+        @extend %p15;
+        color: $heading-font-color;
+    }
+}
+.wr-services-checked{
+    background: $lightest !important;
+}
+.cart-data-wrap{
+    margin: 30px 0 0;
+}

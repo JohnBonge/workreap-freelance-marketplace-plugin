@@ -1,0 +1,18 @@
+/* Error: Undefined variable.
+ *    ,
+ * 99 |         $text-light:$light;
+ *    |                     ^^^^^^
+ *    '
+ *   dashboard\_insightfreelancer.scss 99:21  @import
+ *   dashboard.scss 4:9                       root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined variable.\a    \2577 \a 99 \2502          $text-light:$light;\d\a    \2502                      ^^^^^^\a    \2575 \a   dashboard\\_insightfreelancer.scss 99:21  @import\a   dashboard.scss 4:9                       root stylesheet";
+}

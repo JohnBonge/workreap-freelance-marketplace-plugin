@@ -1,0 +1,359 @@
+/** ====== Signup components ====== **/
+.wr-auth-popup .wr-loginconatiner{
+    height: 100%;
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    figure{
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        z-index: -1;
+        height: 100%;
+        position: absolute;
+        background: $dark-black;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: $opacity_20;
+            object-position: top;
+        }
+    }
+}
+.wr-auth-popup .wr-popupcontainer{
+    padding: 50px 12px;
+}
+.wr-auth-popup .wr-login_title{
+    width: 100%;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 476px;
+    text-align: center;
+    background-color: $clr-white;
+    border-radius: 30px 30px 0 0;
+    & > a{
+        display: block;
+        text-align: center;
+        max-width: 130px;
+        margin: 0 auto;
+    }
+    h5{
+        margin: 10px auto 0 auto;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        max-width: 300px;
+        color: #888888;
+        text-align: center;
+    }
+    & + .wr-login-content{padding-top: 0;}
+}
+.wr-login-content{
+    .user-registration-form{    
+        .half-group{
+            width: calc(100% / 2);
+        }
+    }
+    .form-group{
+        label{
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            color: #585858;
+        }
+    }
+    .wr-form-action{
+        justify-content: space-between;
+        > a{
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            color: $theme-color;
+        }
+    }
+    .wr-placeholderholder{
+        align-items: start;
+        flex-direction: column;
+    }
+    .wr-form-action-footer{
+        gap: 4px;
+        width: 100%;
+        display: flex;
+        color: #585858;
+        margin-top: 10px;
+        align-items: center;
+        justify-content: center;
+        font: 500 14px/20px $heading-font-family;
+        > a{
+            color: #000000;
+            font-weight: 600;
+        }
+    }
+    .wr-reg-option{
+        width: 100%;
+        display: flex;
+        padding: 12px;
+        align-items: center;
+        border-radius: 10px;
+        background: #f7f7f8;
+    }
+}
+.wr-formlogin{
+    .wr-form-action-footer{
+        margin-top: 30px;
+    }
+}
+.wr-auth-popup .wr-login-content{
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 0 0 30px 30px;
+    background-color: $clr-white;
+    .form-group-title{display: none;}
+    .form-control{height: 48px;}
+    fieldset{margin: -10px;}
+    .wr-themeform__wrap{
+        > *{
+            padding: 10px;
+        }
+        .form-group.wr-lost-password{
+            margin-top: 10px;
+        }
+        .wr-popup-terms{
+            .wr-btn-solid-lg{
+                margin-top: 0;
+            }
+        }
+    }
+    .wr-form-btn{
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        > span{
+            @extend %h6;
+            color:$text-light;
+            background-color: $clr-white;
+            position: relative;
+            padding: 0 10px;
+            margin: 30px 0 10px;
+        }
+        .wr-lost-password{
+            padding-top: 30px;
+        }
+        .wr-checkterm{
+            width: 100%;
+            .wr-btn{
+                width: 100%;
+                &:hover,
+                &:focus{
+                    color: $button-color;
+                    background-color: $theme-color_20_light;
+                }
+            }
+        }
+        .wr-sginup-btn{
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .wr-optioanl-or::before{
+            left: 0;
+            width: 100%;
+        }
+    }
+}
+.wr-optioanl-or{
+    width: 100%;
+    text-align: center;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    position: relative;
+    span{
+        @extend %h6;
+        color:$text-light;
+        background-color: $clr-white;
+        position: relative;
+        padding: 0 10px;
+    }
+    &::before{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        height: 1px;
+        width: calc(100% - 20px);
+        background-color: $lighter;
+    }
+}
+.wr-login-content .wr-themeform__wrap .wr-form-btn .wr-optioanl-or{
+    padding-top:30px !important;
+    padding-bottom: 30px !important;
+}
+.wr-sginup-btn{
+    width: 100%;
+    padding-bottom: 20px;
+    #google_signup{
+        width: 100%;
+    }
+}
+.btn-signup{
+    width: 100%;
+    border : 1.5px solid $lighter;
+    height: auto;
+    padding: 13px 10px;
+    img{
+        padding-right: 10px;
+    }
+    &:hover,
+    &:focus{
+        background-color: #fff;
+        color: $heading-font-color;
+    }
+}
+.wr-lost-password{
+    @extend %flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    a{
+        @extend %h6;
+    }
+}
+.wr-password-clr_light{
+    color:$text-light;
+    &:hover{
+        color:$text-light;
+    }
+}
+.wr-login-titlev2{
+    h5{
+        max-width: 330px;
+        margin: 0 auto;
+    }
+}
+.user-registration-form,.wr-forgot-password-form{
+    .form-group-half,
+    .form-group{
+        margin: 0;
+    }
+}
+
+.wr-sc-shortcode {
+    .wr-login-content {
+        .wr-forgot-password-form {
+            .form-group > button{
+                margin-top:0;
+            }
+        }
+    }
+}
+
+.password-hide-show{display:none;}
+.wr-reg-option{
+    .wr-radio{
+        input[type=radio]{
+            &:checked{
+                & + label{
+                    color: $heading-font-color;
+                    &:before{border: 0;}
+                }
+            }
+            & + label{
+                &:after{
+                    top: 8px;
+                    left: 5px;
+                    width: 6px;
+                    height: 6px;
+                }
+            }
+        }
+        & + .wr-radio{
+            padding-left:20px
+        }
+    }
+}
+
+
+// signIn popup
+
+
+.wr-loginclose-tag{
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    z-index: 1051;
+    height: 40px;
+    display: grid;
+    border-radius: 50%;
+    position: absolute;
+    place-items: center;
+    color: $heading-font-color;
+    background-color: transparent;
+    i{
+        font-size: 20px;
+    }
+    &:hover{
+        color: $heading-font-color;
+    }
+}
+.wr-loginconatiner-two{
+    .wr-popupcontainer{
+        max-width: 440px;
+        position: relative;
+    }
+}
+.wr-login-content-two{
+    border-radius: 30px 0 30px 30px;
+}
+.wr-login-info{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 30px;
+    h5{
+        margin-bottom: 0;
+    }
+}
+#wr-signup-model{
+    .modal-dialog{
+        max-width: 600px;
+    }
+} 
+#wr-login-model,
+#wr-pass-model{
+    .modal-dialog{
+        max-width: 400px;
+    }
+} 
+.wr-auth-popup{
+    .modal-dialog{
+        max-width: 416px;
+        .modal-content{
+            border-radius: $radiusvthree;
+        }
+    }
+    .wr-loginconatiner{
+        padding: 0;
+        min-height: unset;
+    }
+    .wr-popupcontainer{
+        padding: 0;
+    }
+    .wr-login_title{
+        padding: 0 0 30px;
+    }
+    .wr-login-content{
+        padding: 0;
+        .form-control{
+            border: 0;
+            background: #f7f7f8;
+            &:hover{
+                box-shadow: none;
+                border: 0 !important;
+            }
+        }
+    }
+    
+}

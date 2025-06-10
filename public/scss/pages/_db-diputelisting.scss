@@ -1,0 +1,339 @@
+/** ====== Dispute Listing components ====== **/
+.wr-disputemain{
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid $border-color;
+    .wr-extras{
+        text-align: right;
+        margin-top: 0;
+    }
+    .wr-disputedisc{flex: initial;}
+}
+.wr-disputextrasinfo{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    & ~ .wr-disputextrasinfo{
+        margin-right: auto;
+        margin-left: 60px;
+    }
+    figure{
+        margin: 0 20px 0 0;
+        flex: none;
+        img{
+         @extend %border-radius4;
+        }
+    }
+    .wr-taskinfo{
+        span{
+            color: $text-gray;
+            font-size: rem(14);
+            margin-bottom: 2px;
+        }
+    }
+    .wr-taskinfo{
+        h6{
+            font-size: rem(16px);
+        }
+    }
+}
+.wr-disputedisc{
+    flex: 0 0 80%;
+    .wr-tags{
+        padding-bottom: 3px;
+    }
+    > span{
+        display: inline-block;
+        font: 400 rem(14)/em(20,14) $body-font-family;
+        margin: 9px 0 0;
+    }
+    h5{
+        margin: 0;
+        a{
+            display: block;
+            font-weight: 500;
+            line-height:em(17,14);
+            &:hover{
+                color: inherit;
+            }
+        }
+    }
+}
+.wr-sarticlesbtnsarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 29px;
+}
+.wr-disputearea{
+    margin: 0 0 30px;
+    background-color: #fff;
+    border: 1px solid $border-color;
+    border-radius: $radius;
+    .wr-extrasarticles{
+        & + .wr-extrasarticles{
+            padding: 25px 30px 23px 30px;
+            border-bottom: 0;
+        }
+    }
+}
+.wr-extrasarticles{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 29px;
+    border-bottom: 1px solid $border-color;
+}
+.wr-articletitle{
+    h4{
+        margin: 0 0 13px;
+        font: 600 rem(20)/em(28,20) $heading-font-family;   
+    }
+}
+.wr-articlediscription{
+    p{
+        font-size: rem(16px);
+        line-height: em(26,16);
+        margin: 0;
+        color: $text-gray;
+        ~ p{margin-top: 18px;}
+    }
+}
+.wr-articlelist{
+    padding: 2px 0 28px;
+    margin: 0;
+    li{
+        position: relative;
+        list-style-type: none;
+        padding: 0 0 7px 15px;
+        font: 400 rem(16)/em(22,16) $body-font-family;   
+        color: $text-gray;
+        &:after {
+            width: 4px;
+            height: 4px;
+            left: 0;
+            top:9px;
+            font-size: 1.375rem;
+            content: "";
+            position: absolute;
+            background-color: $text-gray;
+            border-radius: 50%;
+        }
+        &:last-child{
+            padding-bottom: 0;
+        }
+    }
+    & ~ .wr-articlediscription{
+        p{
+            margin: 0;
+        }
+    }
+}
+.wr-extrasarticlesbg{background: #f7f7f7;}
+.wr-articlebtns{
+    @extend %flex;
+    margin: -5px;
+    a{
+        min-width: 150px;
+        margin: 5px;
+    }
+}
+.wr-articleaction{
+    p{
+        width: 68%;
+        margin: 0;
+        color: $text-light; 
+    }
+}
+.wr-btngreen{
+    background: #00cc8d;
+}
+.wr-btnred{
+    background: #ff7062;
+}
+.wo-inputheight{
+    margin: 0 10px 0 0;
+    width: 340px;
+    padding: 0;
+    .form-control{
+        height: 44px;
+    }
+    &.wo-inputicon.form-group i{
+        right: 9px;
+    }
+}
+.wr-displistform{
+    fieldset{
+        margin:0;
+    }
+}
+.wr-table {
+    border: 0;
+	width: 100%;
+    padding: 10px;
+    max-width: 100%;
+    margin-bottom: 0;
+    border-spacing: 0;
+    background-color: #fff;
+    border-collapse: separate;
+    border-radius: $radiusvthree;
+    >thead {
+        border-radius: $radiusvthree $radiusvthree 0 0;
+		>tr {
+            background-color: #f7f7f7;
+            border-radius: $radiusvthree $radiusvthree 0 0;
+            & th:first-child{
+                border-radius: 10px 0 0 10px;
+            }
+            & th:last-child{
+                border-radius: 0 10px 10px 0;
+            }
+			>th {
+                vertical-align: middle;
+                padding: 15px 30px !important;
+				font: 600 14px/20px $body-font-family;
+				color: #333;
+                text-align: left;
+                border-bottom: 2px solid #fff !important;
+                .wr-checkbox{
+                    label{
+                        color: #333;
+                        span{
+                            display: block;
+                            font: 700 rem(14)/em(24,14) $body-font-family;
+                            color: $heading-font-color;
+                        }
+                    }
+                }
+            }
+            td{
+                color: $secondary-color;
+                > span{
+                    display: inline-block;
+                    color: $secondary-color;
+                    font: 400 rem(14)/em(15, 14) $body-font-family;
+                    em {
+                        font-size: rem(12px);
+                        vertical-align: middle;
+                        display: inline-block;
+                    }
+                }
+            }
+		}
+	}
+	>tbody {
+		>tr {
+            @extend %transition;
+            &:hover{
+                border-radius: $radiusvthree;
+                background: $lightest;
+            }
+            & td:first-child{
+                border-radius: 10px 0 0 10px;
+            }
+            & td:last-child{
+                border-radius: 0 10px 10px 0;
+            }
+            td {
+                font-size: 14px;
+                vertical-align: middle;
+                padding: 8px 30px;
+                border: 0;
+                text-align: left;
+                color: $text-gray;
+                label, a{
+                    font-size: 14px;
+                    font-family: $body-font-family;
+                    font-weight: 400;
+                    display: inline-block;
+                    width: auto;
+                }
+                a{
+                    color: $text-gray;
+                    span{
+                        color: $text-gray;
+                        &.wr-blue{
+                            color: $text-gray;
+                        }
+                    }
+                    &:hover{
+                        color: $anchor-color;
+                        span{
+                            color: $anchor-color;
+                            &.wr-blue{
+                                color: $anchor-color;
+                            }
+                        }
+                    }
+                }
+            }
+            td{
+                > span{
+                    display: inline-block;
+                    color: $secondary-color;
+                    font: 400 rem(14)/em(15, 14) $body-font-family;
+                    em {
+                        color: #999;
+                        font-size: rem(12px);
+                        vertical-align: baseline;
+                        display: inline-block;
+                        margin: 0 0 0 3px;
+                    }
+                }
+            }
+			>th {
+				font: 400 rem(14)/em(15, 14) $body-font-family;
+				color: $secondary-color;
+				border: 0;
+				text-align: left;
+			}
+		}
+	}
+	
+}
+.wr-vieweye{
+    display: inline-block;
+    color: $secondary-color;
+    font: 400 rem(14)/em(15, 14) $body-font-family;
+        span{
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 2px 0 0;
+            color: $theme-color;
+            font-family: 'themify';
+        }
+    }
+.wr-dispueitems{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-left: auto;
+    .wr-tags{
+        padding: 0;
+    }
+    .wr-vieweye{
+        margin: 0 0 0 20px;
+        font-size: rem(13);
+        span{font-size: 16px;}
+    }
+    a{
+        &:hover{
+            color: $theme-color;
+        }
+    }
+}
+.wr-invoicecon{
+    text-align: left;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+.wr-disputrightinfo{
+    span{color: $text-gray;}
+    .wr-taskinfo h6{font-size: rem(13);}
+}
+.wr-extrasarticles-column{
+    flex-direction: column;
+    align-items: flex-start;
+}

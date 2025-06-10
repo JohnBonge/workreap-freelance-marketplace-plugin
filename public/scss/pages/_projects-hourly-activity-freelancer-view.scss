@@ -1,0 +1,292 @@
+/** ====== Project Houly Freelancer components ====== **/
+.wr-projectsstatus_headvtwo{
+    padding: 30px;
+    display: flex;
+    box-shadow: inset 0px 1px 0px $lightest_2;
+}
+.wr-timecards{
+    padding: 30px;
+    box-shadow: inset 0px 1px 0px $lightest_2;
+    &_head{
+        display: flex;
+        margin: 0 0 20px;
+        align-items: center;
+        > h5{
+            margin: 0;
+        }
+        .wr-actionselect{
+            padding-left: 20px;
+            margin-left: auto;
+        }
+        .wr-project-tag{
+            border: 0;
+            color: #D9A113 !important;
+            margin-left: 10px;
+            background: rgba(217, 161, 19, 0.1);
+            &:hover{
+                background: rgba(217, 161, 19, 0.1) !important;
+            }
+        }
+    }
+    &_total{
+        @extend %flex;
+        align-items: center;
+        margin-left: auto;
+        flex: none;
+        padding-right: 10px;
+        > h6{
+            margin-bottom: 0;
+            flex: none
+            
+        }
+        > span{
+            @extend %h5;
+            padding-left: 6px;
+            em{
+                font-style: normal;
+                color:$text-light;
+                font-weight: 600;
+            }
+        }
+        .wr-calendar{
+            padding-left: 20px;
+        }
+    }
+}
+.wr-timeslot{
+    &_list{
+        margin: -5px;
+        padding: 0;
+        display: flex;
+        align-items: flex-start;
+        li{
+            padding: 5px;
+            list-style-type: none;
+        }
+        span{
+            @extend %p15;
+            display: block;
+            margin: 0 0 4px;
+            font-weight: 600;
+        }
+        input{
+            height: 40px;
+            padding: 0 10px;
+            text-align: center;
+        }
+    }
+    &_save{
+        display: flex;
+        margin: 20px 0 0;
+        align-items: center;
+        justify-content: flex-end;
+        .wr-btn-solid{
+            flex: none;
+            background-color: $theme-color;
+            &:hover{
+                background-color: $theme-color_20_light;
+            }
+        }
+        > span{
+            @extend %p14;
+            & + .wr-btn-solid{
+                margin-left: 20px;
+            }
+        }
+    }
+}
+.wr-workinghours-popup{
+    .modal-dialog{
+        max-width: 856px;
+    }
+    .wr-themeform{
+        .wr-btnarea{
+            .wr-btn-solid-lg{
+                width: 100%;
+                background-color: $theme-color;
+                &:hover{
+                    background-color: $theme-color_20_light;
+                }
+            }
+        }
+    }
+    .wr-themeform{
+        fieldset{
+            margin: 0;
+            .wr-dragslots{
+                width: auto;
+                flex: auto;
+                margin: -10px;
+            }
+        }
+        .wr-label{
+            @extend %flex;
+            align-items: center;
+            .wr-addicon{
+                margin-left: auto;
+                display: flex;
+                align-items:center;
+            }
+        }
+    }
+}
+.at-slots-timedate{
+    h4{
+        margin: 0;
+    }
+}
+.wr-projectsactivityvtwo{
+    .wr-nav-tabs{
+        padding: 0;
+        box-shadow: inset 0px -1px 0px $lightest_2;
+        li{
+            flex: none;
+            width: auto;
+            button{
+                padding: 14px 60px;
+            }
+        }
+    }
+    .wr-proinvoices,
+    .wr-proactivity{
+        padding: 30px;
+    }
+    .wr-proinvoices_table tbody > tr > td p{
+        max-width: initial;
+    }
+}
+.wr-addtime-slot{
+    @extend %flex;
+    align-items: center;
+    padding-left: 0;
+    margin: 20px 0 0;
+    border-top: 1px solid $lightest_2;
+    border-left: 1px solid $lightest_2;
+    border-radius: $radiusvtwo;
+    li{
+        
+        height: 118px;
+        list-style-type: none;
+        width: 14.26%;
+        background: $lightest;
+        box-shadow: inset -1.5px 0px 0px #EEEEEE, inset 0px -1.5px 0px #EEEEEE;
+        padding: 20px;
+        > span{
+            @extend %p15;
+            font-weight: 600;
+            display: block;
+        }
+        > em{
+            @extend %p14;
+            color:$text-light;
+            font-weight: 600;
+            display: block
+        }
+        > a{
+            @extend %p14;
+            font-weight: 600;
+            @extend %flex;
+            align-items: center;
+            padding-top: 6px;
+            i{
+                font-size: 20px;
+                padding-left: 10px;
+            }
+        }
+    }
+    li.wr-added-time{
+        background-color: transparent;
+        a{
+            color: $heading-font-color;
+        }
+    }
+}
+.wr-timecard-table tbody  > tr > td p{
+    max-width: 100%;
+}
+.wr-timecard-table{
+    thead {
+        > tr {
+            th{
+                &:nth-child(2){
+                    width: 60%;
+                }
+                &:last-child{
+                    width: 170px;
+                }
+            }
+        }
+    } 
+} 
+.wr-timealert-table{
+    margin-top: 20px;
+}
+.wr-timealert-table tbody > tr > td p{
+    max-width: 480px;
+}
+.wr-timealert-table thead > tr th:last-child{
+    width: 170px;
+}
+.wr-timealert-table tbody > tr > td{
+    vertical-align: top;
+}
+.wr-today-timeslot{
+    padding-left: 0;
+    margin: 20px 0 0;
+    li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 10px 10px 20px;
+        background: $lightest;
+        border-radius: $radiusvtwo;
+        @extend %transition;
+        span{
+            @extend %p15;
+            font-weight: 600;
+            flex: none;
+            padding-right: 10px;
+        }
+        input{
+            height: 40px;
+            text-align: center;
+            @extend %transition;
+        }
+        .form-control[readonly]{
+            background-color: $clr-white;
+        }
+        &:hover{
+            input{
+                box-shadow: $drop_shadows_lightest;
+            }
+        }
+        + li{
+            margin-top: 10px;
+        }
+    }
+}
+.wr-popup-content{
+    .wr-themeform__wrap{
+        h4{
+            margin-bottom: 0;
+        }
+    }
+}
+.wr-timecardwraper{
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+.wr-betaversion-wrap-two{
+    flex-direction: column;
+    text-align: center;
+}
+.wr-unlock-week{
+    padding-top: 20px;
+    h5{
+        margin-bottom: 4px;
+    }
+    p{
+        @extend %p15;
+    }
+}
