@@ -2306,3 +2306,326 @@ if(!function_exists('workreap_save_page_meta_box_data')){
 	}
 	add_action('save_post', 'workreap_save_page_meta_box_data');
 }
+
+/**
+ * Restrict coach login based on approval status.
+ *
+ * @param WP_User $user     User object.
+ * @param string  $username Username.
+ * @param string  $password Password.
+ * @return WP_User|WP_Error WP_User object if login is allowed, WP_Error if denied.
+ */
+function workreap_restrict_coach_login($user, $username = null, $password = null) {
+
+    if ( defined('DOING_CRON') && DOING_CRON ) {
+        return $user;
+    }
+
+    // Check if this is the Workreap AJAX login action.
+    // The action string is 'workreap_signin' based on includes/class-user-login.php
+    $is_workreap_ajax_login_action = (defined('DOING_AJAX') && DOING_AJAX && isset($_POST['action']) && $_POST['action'] === 'workreap_signin');
+
+    // Check if this is a standard wp-login.php form submission
+    $is_standard_wp_login_form = (!empty($_POST['log']) && !empty($_POST['pwd']) && isset($_POST['wp-submit']));
+
+    // If it's an AJAX call, but NOT the workreap_signin action, then it's some other background AJAX. Bypass.
+    // Also added woocommerce_login as an example of another known login AJAX action to allow.
+    $is_woocommerce_login_form = (defined('DOING_AJAX') && DOING_AJAX && isset($_POST['action']) && $_POST['action'] === 'woocommerce_login');
+
+    if (defined('DOING_AJAX') && DOING_AJAX && !$is_workreap_ajax_login_action && !$is_woocommerce_login_form ) {
+        return $user;
+    }
+
+    if (!(defined('DOING_AJAX') && DOING_AJAX) && !$is_standard_wp_login_form) {
+        if ($username === null && !$is_workreap_ajax_login_action ) {
+             return $user;
+        }
+    }
+
+    // Capture relevant parts of POST for debugging, avoid dumping everything for security/privacy
+    $relevant_post_data = array(
+        'action' => isset($_POST['action']) ? $_POST['action'] : null,
+        'log' => isset($_POST['log']) ? $_POST['log'] : null, // Username from form
+        // DO NOT log 'pwd' or other sensitive fields
+    );
+
+    if (is_wp_error($user)) {
+        return $user;
+    }
+
+    $check_user = null;
+    if ($user instanceof WP_User) {
+        $check_user = $user;
+    } elseif ($username) {
+        $check_user = get_user_by('login', $username);
+    }
+
+    if (!$check_user instanceof WP_User) {
+         return $user;
+    }
+
+    // Add cache clearing and user object re-fetch
+    if ($check_user instanceof WP_User) {
+        clean_user_cache($check_user->ID); // Clear cache for this user
+
+        // Re-fetch the user object to ensure we have the absolute latest data from the DB
+        $fresh_user_obj_for_login_check = get_userdata($check_user->ID);
+
+        if ($fresh_user_obj_for_login_check instanceof WP_User) {
+            $check_user = $fresh_user_obj_for_login_check; // Replace $check_user with the fresh object
+        } else {
+            // If re-fetch fails, $check_user remains the object from before cache clean.
+        }
+    }
+
+    $user_type_meta = get_user_meta($check_user->ID, '_user_type', true);
+
+    $is_considered_coach = false; // Flag to determine if user should be checked for approval status
+
+    // Check 1: By WordPress Role
+    if (in_array('freelancer', (array)$check_user->roles) || in_array('freelancers', (array)$check_user->roles)) {
+        $is_considered_coach = true;
+    }
+
+    // Check 2: By _user_type meta
+    if (!$is_considered_coach && ($user_type_meta === 'freelancers' || $user_type_meta === 'freelancer')) { // Check common variations for meta value
+        $is_considered_coach = true;
+    }
+
+    if ($is_considered_coach) {
+        $status = get_user_meta($check_user->ID, 'freelancer_approval_status', true);
+        if ($status !== 'approved') {
+            return new WP_Error('coach_account_pending', __('<strong>Error:</strong> Your coach account is pending admin approval.', 'workreap'));
+        } else {
+        }
+    } else {
+    }
+
+    return $check_user;
+}
+add_filter( 'wp_authenticate_user', 'workreap_restrict_coach_login', 10, 3 );
+
+/**
+ * Add Coach Moderation submenu page.
+ */
+function workreap_add_coach_moderation_menu_item() {
+    add_submenu_page(
+        'edit.php?post_type=freelancers', // Parent slug (assuming 'freelancers' CPT slug)
+        esc_html__('Coach Moderation', 'workreap'), // Page title
+        esc_html__('Coach Moderation', 'workreap'), // Menu title
+        'manage_options', // Capability
+        'coach_moderation', // Menu slug
+        'workreap_render_coach_moderation_page' // Callback function
+    );
+}
+add_action('admin_menu', 'workreap_add_coach_moderation_menu_item');
+
+/**
+ * Ensures 'freelancers' CPT posts remain 'draft' if the author is not approved.
+ *
+ * @param array $data    An array of slashed post data.
+ * @param array $postarr An array of sanitized, but otherwise unmodified post data.
+ * @return array Modified post data.
+ */
+function workreap_ensure_coach_profile_draft_status( $data, $postarr ) {
+    // Check if it's the 'freelancers' post type and the status is being set to 'publish'
+    if ( isset($data['post_type']) && $data['post_type'] === 'freelancers' && isset($data['post_status']) && $data['post_status'] === 'publish' ) {
+        // Get the post author ID.
+        // $postarr contains the raw input, $data might have it too but $postarr is safer for original author.
+        $author_id = 0;
+        if (isset($postarr['post_author']) && !empty($postarr['post_author'])) {
+            $author_id = $postarr['post_author'];
+        } elseif (isset($data['post_author']) && !empty($data['post_author'])) {
+            // Fallback, though post_author should ideally be in postarr on save
+            $author_id = $data['post_author'];
+        } elseif (isset($postarr['ID']) && $postarr['ID'] > 0) {
+            // If updating an existing post, get author from the existing post
+            $existing_post = get_post($postarr['ID']);
+            if ($existing_post) {
+                $author_id = $existing_post->post_author;
+            }
+        }
+
+        if ( $author_id > 0 ) {
+            $approval_status = get_user_meta( $author_id, 'freelancer_approval_status', true );
+
+            // If the coach is not approved, force the post status to 'draft'
+            if ( $approval_status !== 'approved' ) {
+                $data['post_status'] = 'draft';
+
+                // Optionally, remove any sticky status if it was set
+                if (isset($data['sticky'])) {
+                    unset($data['sticky']);
+                }
+                // Add an admin notice if possible, though this hook might be too early for direct screen output.
+                // A transient notice could be set here and displayed on a later hook.
+                // For now, focusing on the status change.
+            }
+        }
+    }
+    return $data;
+}
+add_filter( 'wp_insert_post_data', 'workreap_ensure_coach_profile_draft_status', 99, 2 );
+
+/**
+ * Callback function to render the Coach Moderation page.
+ */
+function workreap_render_coach_moderation_page() {
+    ?>
+    <div class="wrap">
+        <h1><?php esc_html_e('Coach Moderation', 'workreap'); ?></h1>
+        <?php
+        // Handle Actions (Approve/Reject)
+        if (isset($_GET['action']) && isset($_GET['user_id']) && isset($_GET['_coach_moderation_nonce'])) {
+            $action = sanitize_text_field($_GET['action']);
+            $user_id = intval($_GET['user_id']);
+            $nonce_verified = false;
+            if ($action === 'approve_coach') {
+                $nonce_verified = wp_verify_nonce($_GET['_coach_moderation_nonce'], 'approve_coach_' . $user_id);
+            } elseif ($action === 'reject_coach') {
+                $nonce_verified = wp_verify_nonce($_GET['_coach_moderation_nonce'], 'reject_coach_' . $user_id);
+            }
+
+            if ($nonce_verified) {
+                if (current_user_can('manage_options')) {
+                    $user_info = get_userdata($user_id);
+
+                    if ($action === 'approve_coach' && $user_info) {
+                        update_user_meta($user_id, 'freelancer_approval_status', 'approved');
+                        $profile_post_id = get_user_meta($user_id, '_linked_profile', true);
+                        if ($profile_post_id) {
+                            wp_update_post(array('ID' => $profile_post_id, 'post_status' => 'publish'));
+                        }
+
+                        // Send approval email
+                        $coach_email = $user_info->user_email;
+                        $site_name = get_bloginfo('name');
+                        $subject = sprintf(esc_html__('Your Coach Account on %s is Approved!', 'workreap'), $site_name);
+                        $message = sprintf(esc_html__('Congratulations! Your coach account on %s has been approved. You can now log in and complete your profile.', 'workreap'), $site_name);
+
+                        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+                        if (class_exists('Workreap_Email_helper')) {
+                            // Assuming Workreap_Email_helper has a method like send_email or similar
+                            // This part might need adjustment based on the actual class implementation
+                            // For now, using wp_mail as a fallback
+                            wp_mail($coach_email, $subject, nl2br($message), $headers);
+                        } else {
+                            wp_mail($coach_email, $subject, nl2br($message), $headers);
+                        }
+
+                        // Trigger WordPress new user notification (for password reset link)
+                        // Check if user was created via admin or front-end, might not need this if Workreap handles it.
+                        // wp_new_user_notification($user_id, null, 'user'); // Consider implications before enabling.
+
+                        echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Coach approved successfully.', 'workreap') . '</p></div>';
+                    } elseif ($action === 'reject_coach' && $user_info) {
+                        update_user_meta($user_id, 'freelancer_approval_status', 'rejected');
+
+                        $coach_email = $user_info->user_email;
+                        $site_name = get_bloginfo('name');
+                        $subject = sprintf(esc_html__('Coach Account Status Update on %s', 'workreap'), $site_name);
+                        $message = sprintf(esc_html__('We regret to inform you that your coach account application on %s has been rejected. Please contact support for further information.', 'workreap'), $site_name);
+
+                        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+                        if (class_exists('Workreap_Email_helper')) {
+                             wp_mail($coach_email, $subject, nl2br($message), $headers);
+                        } else {
+                             wp_mail($coach_email, $subject, nl2br($message), $headers);
+                        }
+
+                        echo '<div class="notice notice-warning is-dismissible"><p>' . esc_html__('Coach rejected.', 'workreap') . '</p></div>';
+                    } else {
+                        echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__('Invalid action or user.', 'workreap') . '</p></div>';
+                    }
+                } else {
+                    echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__('You do not have permission to perform this action.', 'workreap') . '</p></div>';
+                }
+            } else {
+                echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__('Security check failed.', 'workreap') . '</p></div>';
+            }
+        }
+
+        // Display Pending Coaches
+        $args = array(
+            'role' => 'freelancer', // Correct role for freelancers
+            'meta_query' => array(
+                array(
+                    'key' => 'freelancer_approval_status',
+                    'value' => 'pending',
+                    'compare' => '='
+                )
+            )
+        );
+        $pending_coaches = get_users($args);
+        ?>
+        <form method="get"> <?php // Using GET for simplicity, POST could be used too. ?>
+            <input type="hidden" name="page" value="coach_moderation" />
+            <?php // Nonce field is added to links for GET requests, or use a single nonce for the form if using POST actions ?>
+
+            <table class="wp-list-table widefat fixed striped users">
+                <thead>
+                    <tr>
+                        <th scope="col" id="user_id" class="manage-column column-username column-primary" style="width: 80px;">
+                           <span><?php esc_html_e('User ID', 'workreap'); ?></span>
+                        </th>
+                        <th scope="col" id="display_name" class="manage-column column-name">
+                            <span><?php esc_html_e('Display Name', 'workreap'); ?></span>
+                        </th>
+                        <th scope="col" id="email" class="manage-column column-email">
+                           <span><?php esc_html_e('Email', 'workreap'); ?></span>
+                        </th>
+                        <th scope="col" id="registration_date" class="manage-column column-date">
+                            <span><?php esc_html_e('Registration Date', 'workreap'); ?></span>
+                        </th>
+                        <th scope="col" id="actions" class="manage-column column-actions" style="width: 200px;">
+                            <span><?php esc_html_e('Actions', 'workreap'); ?></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="the-list">
+                    <?php
+                    if (!empty($pending_coaches)) {
+                        foreach ($pending_coaches as $user) {
+                            // It's better to generate nonce per action for GET requests for higher security.
+                            $approve_nonce = wp_create_nonce('approve_coach_' . $user->ID);
+                            $reject_nonce = wp_create_nonce('reject_coach_' . $user->ID);
+
+                            $approve_link = admin_url('admin.php?page=coach_moderation&action=approve_coach&user_id=' . $user->ID . '&_coach_moderation_nonce=' . $approve_nonce);
+                            $reject_link = admin_url('admin.php?page=coach_moderation&action=reject_coach&user_id=' . $user->ID . '&_coach_moderation_nonce=' . $reject_nonce);
+                            ?>
+                            <tr>
+                                <td class="username column-username has-row-actions column-primary" data-colname="User ID">
+                                    <?php echo esc_html($user->ID); ?>
+                                </td>
+                                <td class="name column-name" data-colname="Display Name">
+                                    <?php echo esc_html($user->display_name); ?>
+                                </td>
+                                <td class="email column-email" data-colname="Email">
+                                    <a href="mailto:<?php echo esc_attr($user->user_email); ?>"><?php echo esc_html($user->user_email); ?></a>
+                                </td>
+                                <td class="date column-date" data-colname="Registration Date">
+                                    <?php echo esc_html(date_i18n(get_option('date_format'), strtotime($user->user_registered))); ?>
+                                </td>
+                                <td class="actions column-actions" data-colname="Actions">
+                                    <a href="<?php echo esc_url($approve_link); ?>" class="button button-primary"><?php esc_html_e('Approve', 'workreap'); ?></a>
+                                    <a href="<?php echo esc_url($reject_link); ?>" class="button button-secondary" style="margin-left: 5px;"><?php esc_html_e('Reject', 'workreap'); ?></a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <td colspan="5"><?php esc_html_e('No pending coaches found.', 'workreap'); ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <?php
+}

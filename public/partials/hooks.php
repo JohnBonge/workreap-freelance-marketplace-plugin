@@ -3776,10 +3776,16 @@ if (!function_exists('workreap_create_wp_user')) {
                 }
 
                 //Create Post
+                $user_post_status = 'publish';
+                if ($user_type === 'freelancers' || $user_type === 'freelancer') { // Check both singular/plural for $user_type
+                    update_user_meta($user_id, 'freelancer_approval_status', 'pending');
+                    $user_post_status = 'draft';
+                }
+
                 $user_post = array(
                     'post_title'    => wp_strip_all_tags($display_name),
                     'post_name'    	=> $post_name,
-                    'post_status'   => 'publish',
+                    'post_status'   => $user_post_status,
                     'post_author'   => $user_id,
                     'post_type'     => apply_filters('workreap_profiles_user_post_type_name', $user_type),
                 );
@@ -3806,11 +3812,60 @@ if (!function_exists('workreap_create_wp_user')) {
                         update_user_meta($user_id, '_linked_profile_employer', $post_id);
                         update_user_meta($user_id, '_user_type', 'employers');
                         $notifyData['user_type']		= 'employers';
-                    } else if (!empty($user_type) && $user_type === 'freelancers') {
+                        // Optional: Set a specific WordPress role for employers if it's different from default
+                        // $employer_user_obj = new WP_User($user_id);
+                        // $employer_user_obj->set_role('employer_role_slug');
+                        // error_log("WORKREAP_DEBUG: User ID " . $user_id . " - Employer role set. Roles: " . implode(', ', $employer_user_obj->roles));
+
+                    } else if (!empty($user_type) && ($user_type === 'freelancers' || $user_type === 'freelancer')) { // Robust check for freelancer type
                         update_post_meta($post_id, 'wr_hourly_rate', '');
                         update_user_meta($user_id, '_linked_profile', $post_id);
-                        update_user_meta($user_id, '_user_type', 'freelancers');
+                        update_user_meta($user_id, '_user_type', 'freelancers'); // Use consistent 'freelancers' for meta key
                         $notifyData['user_type']		= 'freelancers';
+
+                        // Set WordPress role for freelancer
+                        // This block should be within the section for 'freelancer' user type processing
+                        if (!is_wp_error($user_id)) { // Ensure user was created successfully
+
+                            $user_obj = new WP_User($user_id);
+
+                            // Explicitly remove the 'subscriber' role, if present.
+                            if (in_array('subscriber', $user_obj->roles)) {
+                                $user_obj->remove_role('subscriber');
+                                // Re-fetch user object to accurately reflect role removal before next operations and logging
+                                $user_obj = new WP_User($user_id);
+                            }
+
+                            // Attempt 1: Add role 'freelancer' (singular)
+                            $target_role_singular = 'freelancer';
+                            $user_obj->add_role($target_role_singular);
+
+                            // Re-fetch user object from the database to get the most up-to-date roles
+                            $user_obj = new WP_User($user_id);
+
+                            // Attempt 2 (Fallback): If 'freelancer' wasn't successfully added AND 'freelancers' (plural) isn't already there, try adding 'freelancers' (plural)
+                            if (!in_array($target_role_singular, $user_obj->roles) && !in_array('freelancers', $user_obj->roles)) {
+                                $target_role_plural = 'freelancers';
+                                $user_obj->add_role($target_role_plural);
+
+                                // Re-fetch user object
+                                $user_obj = new WP_User($user_id);
+                            }
+
+                            // Final check if any freelancer role was set
+                            if (!in_array($target_role_singular, $user_obj->roles) && !in_array('freelancers', $user_obj->roles)) { // Check both again
+                            } else {
+                            }
+
+                            // The line for setting _user_type meta should already be present from plugin's original code or previous steps.
+                        }
+                        // Add cache clearing and final role log for freelancers
+                        if (isset($user_id)) {
+                            clean_user_cache($user_id);
+
+                            // Log the roles one last time AFTER clearing cache by fetching a fresh WP_User object
+                            $final_user_obj_after_cache_clean = new WP_User($user_id);
+                        }
                     }
                     $trail_pkg  = 0;
                     if(!empty($package_option) && !empty($user_type) && $user_type === 'employers' && ($package_option === 'paid' || $package_option === 'freelancer_free')){
@@ -3877,17 +3932,65 @@ if (!function_exists('workreap_create_wp_user')) {
                     if (class_exists('WorkreapRegistrationStatuses')) {
                         $email_helper = new WorkreapRegistrationStatuses();
 
-                        if (!empty($verify_new_user) && $verify_new_user == 'verify_by_link') {
-                            $email_helper->registration_user_email($emailData);
-                        }else{
-                            // to user
-                            $email_helper->registration_account_approval_request($emailData);
-                            // to admin
-                            $email_helper->registration_verify_by_admin_email($emailData);
+                        $approval_status_for_email_check = get_user_meta($user_id, 'freelancer_approval_status', true);
+
+                        $send_standard_user_email = true;
+                        if (isset($user_type) && ($user_type === 'freelancers' || $user_type === 'freelancer')) {
+                            if ($approval_status_for_email_check === 'pending') {
+                                $send_standard_user_email = false;
+                            } else {
+                            }
+                        } else {
                         }
 
-                        if ($workreap_settings['email_admin_registration'] == true) {
-                            $email_helper->registration_admin_email($emailData);
+                        if ($send_standard_user_email) {
+                            if (!empty($verify_new_user) && $verify_new_user == 'verify_by_link') {
+                                $email_helper->registration_user_email($emailData, $user_id);
+                            } else {
+                                $email_helper->registration_account_approval_request($emailData, $user_id);
+                                $email_helper->registration_verify_by_admin_email($emailData, $user_id);
+                            }
+                        }
+
+                        // Admin "New Coach Awaiting Approval" Email Logic
+                        if (isset($user_type) && ($user_type === 'freelancers' || $user_type === 'freelancer')) {
+                             $current_approval_status_for_admin_email = get_user_meta($user_id, 'freelancer_approval_status', true);
+                             if ($current_approval_status_for_admin_email === 'pending') {
+                                $admin_email_target = get_option('admin_email');
+                                $coach_display_name = isset($display_name) ? $display_name : 'N/A'; // $display_name is in the outer scope
+                                // $coach_user_id = $user_id; // $user_id is already the correct user ID
+                                $admin_subject = "New Coach Registration - Awaiting Approval";
+
+                                $user_info_for_email = get_userdata($user_id); // Get WP_User object for additional details
+                                $admin_message_body = "A new coach, " . esc_html($coach_display_name) . ", has registered and is awaiting approval.\n\n";
+                                $admin_message_body .= "User ID: " . $user_id . "\n";
+                                $admin_message_body .= "Username: " . esc_html($user_info_for_email->user_login) . "\n";
+                                $admin_message_body .= "Email: " . esc_html($user_info_for_email->user_email) . "\n\n";
+                                $admin_message_body .= "You can moderate this user from the 'Coach Moderation' page in the WordPress admin area.";
+
+                                $email_headers = array();
+                                $site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+                                $default_sender_email = get_option('admin_email');
+                                $email_headers[] = 'From: ' . esc_html($site_name) . ' <' . $default_sender_email . '>';
+                                // $email_headers[] = 'Content-Type: text/html; charset=UTF-8'; // Keep plain text for now
+
+
+                                $admin_mail_result = wp_mail($admin_email_target, $admin_subject, $admin_message_body, $email_headers);
+                             }
+                        }
+
+                        // General admin notification
+                        if (isset($workreap_settings['email_admin_registration']) && $workreap_settings['email_admin_registration'] == true) {
+                            $is_pending_freelancer_for_general_admin_email = false;
+                            if (isset($user_type) && ($user_type === 'freelancers' || $user_type === 'freelancer')) {
+                                if ($approval_status_for_email_check === 'pending') {
+                                    $is_pending_freelancer_for_general_admin_email = true;
+                                }
+                            }
+                            if (!$is_pending_freelancer_for_general_admin_email) {
+                                $email_helper->registration_admin_email($emailData, $user_id);
+                            } else {
+                            }
                         }
                     }
                 }
@@ -4551,6 +4654,41 @@ if (!function_exists('workreap_listing_task_html_v1')) {
     }
     add_action('workreap_listing_task_html_v1', 'workreap_listing_task_html_v1');
 }
+
+/**
+ * Display a notice on the freelancer dashboard if their account is pending approval.
+ */
+function workreap_display_pending_approval_notice() {
+    if ( is_user_logged_in() ) {
+        $user = wp_get_current_user();
+        if ( in_array( 'freelancer', (array) $user->roles ) || in_array( 'freelancers', (array) $user->roles ) ) { //Check for both singular and plural
+            $status = get_user_meta( $user->ID, 'freelancer_approval_status', true );
+            if ( $status !== 'approved' ) {
+                $message = '';
+                if ( $status === 'pending') {
+                    $message = esc_html__( 'Your account is pending admin approval.', 'workreap' );
+                } elseif ( $status === 'rejected' ) {
+                    $message = esc_html__( 'Your account application has been rejected. Please contact support for more information.', 'workreap' );
+                } else {
+                    // Generic message if status is neither pending nor approved (and not rejected explicitly)
+                    $message = esc_html__( 'Your account requires attention. Please contact support.', 'workreap' );
+                }
+
+                echo '<div class="workreap-notice workreap-warning-notice" style="background-color: #fff3cd; border-left: 4px solid #ffeeba; padding: 12px; margin-bottom: 20px; color: #856404;">';
+                echo '<p style="margin:0;">' . $message . '</p>';
+                echo '</div>';
+            }
+        }
+    }
+}
+// Attempt to hook into a common dashboard hook. This might need adjustment.
+// Common dashboard hooks could be 'workreap_before_dashboard_content', 'wp_dashboard_setup', or theme/plugin specific ones.
+// For now, let's assume a generic hook that might exist or can be added.
+// This hook 'workreap_freelancer_dashboard_top_notice' is speculative.
+add_action( 'workreap_freelancer_dashboard_top_notice', 'workreap_display_pending_approval_notice' );
+// As a fallback, if no specific hook is found, this function can be called directly in dashboard template files.
+// Example: if (function_exists('workreap_display_pending_approval_notice')) { workreap_display_pending_approval_notice(); }
+
 
 /**
  * Freelancer hourly rate
